@@ -1,4 +1,7 @@
 """
+
+Using the Authorization Code Grant
+
 The inital code was producted by pdwhmeautomation in Python 2
 This code has been adapted by Pauline LAURON for Python 3
 """
@@ -79,7 +82,7 @@ def GetNewAccessToken(RefToken):
   tokenreq = urllib.request.Request(TokenURL,BodyURLEncoded)
 
   #Add the headers, first we base64 encode the client id and client secret with a : inbetween and create the authorisation header
-  tokenreq.add_header('Authorization', 'Basic ' + base64.b64encode(b'228M93:5ab70e6d954ba131b5928d272e3cf5e6').decode('utf-8'))
+  tokenreq.add_header('Authorization', 'Basic ' + base64.b64encode((OAuthTwoClientID + ':' + ClientOrConsumerSecret).encode('ascii')).decode('utf-8'))
   tokenreq.add_header('Content-Type', 'application/x-www-form-urlencoded')
 
   #Fire off the request

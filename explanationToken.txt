@@ -1,0 +1,18 @@
+Tuto to get access token and refresh access
+
+Replace XXXXXX with your clientID and go to : 
+https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=XXXXXX&redirect_uri=https%3A%2F%2Fwww.google.fr&scope=activity%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight&expires_in=60480
+
+The redirecting URL is like https://www.google.fr/?code=XXXXXXXXXXXXXXXXXXXXXXX#_=_
+
+Copy the part XXX 
+
+Open and modify the file getToken with your ClientID, Client secret and the code you get above. 
+
+Execute getToken and you will have an access token and a refresh access diplay on the console. 
+
+Copy them in the file tokens in this order : 
+access token 
+refresh token 
+
+
