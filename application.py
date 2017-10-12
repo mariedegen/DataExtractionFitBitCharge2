@@ -2,17 +2,16 @@
 
 import authentification
 import imageViewer
+import graphData
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 #Connexion and get data
 dataConnexion = authentification.mainAuthentification()
 
+#Name of the user
 nameUser = dataConnexion['user']['displayName']
 
-print(nameUser)
-
-
 #Open the application
-windowFitbit = imageViewer.mainInterface()
+windowFitbit = imageViewer.mainInterface(nameUser)
 

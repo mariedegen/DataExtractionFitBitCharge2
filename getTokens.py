@@ -19,7 +19,7 @@ ClientOrConsumerSecret = '5ab70e6d954ba131b5928d272e3cf5e6'
 TokenURL = 'https://api.fitbit.com/oauth2/token'
 
 #I got this from the first verifier part when authorising my application
-AuthorisationCode = "9215c56d152da3d1863f2d3c05ec4e2f9f1165ac"
+AuthorisationCode = "25115f85d5212a7138b6841d7ba09829fe2c570b"
 
 
 #Form the data payload
