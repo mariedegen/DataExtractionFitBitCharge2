@@ -14,6 +14,8 @@ import json
 import os
 import bs4
 
+import getTokens
+
 #This is the Fitbit URL to use for the API call
 FitbitURL = "https://api.fitbit.com/1/user/-/profile.json"
 
@@ -106,10 +108,14 @@ def GetNewAccessToken(RefToken):
     print("New access token output >>> " + FullResponse.decode('utf-8'))
   except urllib.error.URLError as e:
     #Gettin to this part of the code means we got an error
-    print("An error was raised when getting the access token.  Need to stop here")
+    print("An error was raised when getting the access token.")
     print(e.code)
     print(e.read())
-    sys.exit()
+
+    #To get a new first token
+    getTokens.getFirstToken(IniFile)
+    
+    #sys.exit()
 
 #This makes an API call.  It also catches errors and tries to deal with them
 def MakeAPICall(InURL,AccToken,RefToken):
