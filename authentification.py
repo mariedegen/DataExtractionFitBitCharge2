@@ -20,7 +20,7 @@ import getTokens
 FitbitURLProfile = "https://api.fitbit.com/1/user/-/profile.json"
 #FitbitURLStep = "https://api.fitbit.com/1/user/-/activities/log/steps/date/today/1d.json"
 #FitbitURLHeart = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/00:00/00:01.json"
-FitbitURLHeart = "https://api.fitbit.com/1/user/-/activities/heart/date/2017-10-01/1d/1min.json"
+FitbitURLHeart = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1min.json"
 FitbitURLStep = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1m.json"
 
 # apiCall = '/1/user/-/devices.json'
