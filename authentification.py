@@ -17,7 +17,14 @@ import bs4
 import getTokens
 
 #This is the Fitbit URL to use for the API call
-FitbitURL = "https://api.fitbit.com/1/user/-/profile.json"
+FitbitURLProfile = "https://api.fitbit.com/1/user/-/profile.json"
+#FitbitURLStep = "https://api.fitbit.com/1/user/-/activities/log/steps/date/today/1d.json"
+#FitbitURLHeart = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/00:00/00:01.json"
+FitbitURLHeart = "https://api.fitbit.com/1/user/-/activities/heart/date/2017-10-01/1d/1min.json"
+FitbitURLStep = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1m.json"
+
+# apiCall = '/1/user/-/devices.json'
+# apiCall = '/1/user/-/activities/date/2015-10-22.json'
 
 #Use this URL to refresh the access token
 TokenURL = "https://api.fitbit.com/oauth2/token"
@@ -106,6 +113,7 @@ def GetNewAccessToken(RefToken):
     WriteConfig(NewAccessToken,NewRefreshToken)
 
     print("New access token output >>> " + FullResponse.decode('utf-8'))
+    
   except urllib.error.URLError as e:
     #Gettin to this part of the code means we got an error
     print("An error was raised when getting the access token.")
@@ -114,6 +122,7 @@ def GetNewAccessToken(RefToken):
 
     #To get a new first token
     getTokens.getFirstToken(IniFile)
+    mainAuthentification(0)
     
     #sys.exit()
 
@@ -136,7 +145,7 @@ def MakeAPICall(InURL,AccToken,RefToken):
     #Read the response
     FullResponse = json.load(response)
 
-    print(FullResponse)
+    #print(FullResponse)
     
     #Return values
     return True, FullResponse
@@ -155,7 +164,7 @@ def MakeAPICall(InURL,AccToken,RefToken):
 
 
 #Main part of the code
-def mainAuthentification():
+def mainAuthentification(menu):
   #Declare these global variables that we'll use for the access and refresh tokens
   AccessToken = ""
   RefreshToken = ""
@@ -166,13 +175,23 @@ def mainAuthentification():
   AccessToken, RefreshToken = GetConfig()
 
   #Make the API call
-  APICallOK, APIResponse = MakeAPICall(FitbitURL, AccessToken, RefreshToken)
-  
+  if (menu == 0):
+    APICallOK, APIResponse = MakeAPICall(FitbitURLProfile, AccessToken, RefreshToken)
+  elif (menu == 1):
+    APICallOK, APIResponse = MakeAPICall(FitbitURLHeart, AccessToken, RefreshToken)
+  elif (menu == 2):
+    APICallOK, APIResponse = MakeAPICall(FitbitURLStep, AccessToken, RefreshToken)
+  elif (menu == 3):
+    APICallOK, APIResponse = MakeAPICall(FitbitURLStep, AccessToken, RefreshToken)
+  else :
+    APICallOK, APIResponse = MakeAPICall(FitbitURLProfile, AccessToken, RefreshToken)
+
   if APICallOK:
     return APIResponse
   else:
     if (APIResponse == TokenRefreshedOK):
       print("Refreshed the access token.  Can go again")
+      mainAuthentification(0)
     else:
      print(ErrorInAPI)
 

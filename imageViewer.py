@@ -1,19 +1,25 @@
 #!/usr/bin/python
  
 from PyQt5 import QtGui, QtCore, QtWidgets
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
 import sys
 
-import interface
-import graphData
+import interfaceMain
+import graphicData
+from interfaceGraphic import *
+from interfaceChoice import *
  
-class ImageViewer(QtWidgets.QMainWindow, interface.Ui_FitbitWindow):
-
-    userName = ''
+class ImageViewer(QtWidgets.QMainWindow, interfaceMain.Ui_FitbitWindow):
     
     def __init__(self, parent=None):
         super(ImageViewer, self).__init__(parent)
         self.setupUi(self)
 
+        #attribut the name of the user
+        self.userName = ''        
+        
         #handle the click
         self.btnCoeur.clicked.connect(self.handleButtonHeart)
         self.btnLocalisation.clicked.connect(self.handleButtonLocalisation)
@@ -25,9 +31,17 @@ class ImageViewer(QtWidgets.QMainWindow, interface.Ui_FitbitWindow):
         self.btnData.clicked.connect(self.handleButtonData)
 
 
+    #To diplay the graph oh the heart rate in an other window
     def handleButtonHeart(self):
-        print('PyQt5 button click 1')
+        #to create and to save the graph
+        functionGraph = graphicData.CatalogFunction()
+        graph = functionGraph.DisplayGraphHeart(self.userName)
+        print("coucou")
+        self.windowGraph(graph)
 
+        """graphMonth = functionGraph.DisplayGraphHeartMonth(self.userName)
+        windowGraph(graphMonth)"""
+    
     def handleButtonLocalisation(self):
         print('PyQt5 button click 2 ')
 
@@ -35,7 +49,10 @@ class ImageViewer(QtWidgets.QMainWindow, interface.Ui_FitbitWindow):
         print('PyQt5 button click 3 ')
 
     def handleButtonStep(self):
-        print('PyQt5 button click 4')
+        functionGraph = graphicData.CatalogFunction()
+        graph = functionGraph.DisplayGraphStep(self.userName)
+
+        self.windowGraph(graph)
 
     def handleButtonFire(self):
         print('PyQt5 button click 5')
@@ -46,19 +63,39 @@ class ImageViewer(QtWidgets.QMainWindow, interface.Ui_FitbitWindow):
     def handleButtonLightning(self):
         print('PyQt5 button click 7')
 
+    #To diplay the graph oh the heart rate in an other window
     def handleButtonData(self):
-        graphData.writeGlobalJson(self, jsonFile, name)
-       
+        #To create and to write a file
+        functionGraph = graphicData.CatalogFunction()
+        functionGraph.WriteFile(self.userName)
+
+        #to display a message
+        QMessageBox.about(self, "Data export", "Data exported !")
+
+    #To display the image of the graphic
+    def windowGraph(self, nameGraph):
+        Heart_Rate = QtWidgets.QDialog()
+        ui = Ui_Heart_Rate()
+        ui.setupUi(Heart_Rate, nameGraph)
+        Heart_Rate.exec_()
+
+
+    """def showdialog(self):
+
+        Choice_Heart = QtWidgets.QDialog()
+        uiHeart = Ui_ChoiceHeart()
+        uiHeart.setupUi(Choice_Heart)
+        Choice_Heart.exec_()""" #a continuer
 
         
 
- 
+            
+
     def main(self, nameUser):
         self.show()
-        userName = nameUser
+        self.userName = nameUser
 
 def mainInterface(nameUser): 
-#if __name__=='__main__':
     app = QtWidgets.QApplication(sys.argv)
     imageViewer = ImageViewer()
     imageViewer.main(nameUser)
