@@ -5,12 +5,24 @@ import imageViewer
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-#Connexion and get profile data
-connexionProfile = authentification.mainAuthentification(0)
 
-#Name of the user
-nameUser = connexionProfile['user']['displayName']
+def mainApp():
+    
+    print("ok")
+    #Connexion and get profile data
+    connexionProfile = authentification.mainAuthentification(0)
 
-#Open the application
-windowFitbit = imageViewer.mainInterface(nameUser)
+    print("ok")
+
+    #Name of the user
+    nameUser = connexionProfile['user']['displayName']
+
+
+    print(nameUser)
+
+    #Open the application
+    windowFitbit = imageViewer.mainInterface(nameUser)
+
+
+    print("ok")
 

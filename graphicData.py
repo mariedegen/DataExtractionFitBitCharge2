@@ -36,39 +36,42 @@ class CatalogFunction():
         return int(time[0]+time[1])*3600+int(time[3]+time[4])*60+int(time[6]+time[7])
         
     def SaveGraph(self, arrayTimes, arrayHR, nom):
-      
-            debut = self.GetTimestamp(arrayTimes[0])
-            fin = self.GetTimestamp(arrayTimes[len(arrayTimes)-1])
-            pas = int((fin-debut)/5)
-            axeX = []
-            palier = debut
-            for i in range (0,len(arrayTimes)):
-                ts = self.GetTimestamp(arrayTimes[i])
-                if(ts>=palier):
-                    axeX.append(arrayTimes[i])
-                    palier = ts + pas
-                else:
-                    axeX.append('')
 
-            x=np.arange(len(axeX))
-            pl.figure(figsize=(10,4))
-            pl.xticks(pl.arange(len(axeX)), axeX)
-            pl.plot(x, arrayHR)
-            date = time.localtime()
-            date2 = str(date.tm_mday)+"-"+str(date.tm_mon)+"-"+str(date.tm_year)
-            nomFichier = nom+"_"+date2+"_Heart.png"
-            pl.savefig(nomFichier)
+            try:
+                debut = self.GetTimestamp(arrayTimes[0])
+                fin = self.GetTimestamp(arrayTimes[len(arrayTimes)-1])
+                pas = int((fin-debut)/5)
+                axeX = []
+                palier = debut
+                for i in range (0,len(arrayTimes)):
+                    ts = self.GetTimestamp(arrayTimes[i])
+                    if(ts>=palier):
+                        axeX.append(arrayTimes[i])
+                        palier = ts + pas
+                    else:
+                        axeX.append('')
+
+                x=np.arange(len(axeX))
+                pl.figure(figsize=(10,4))
+                pl.xticks(pl.arange(len(axeX)), axeX)
+                pl.plot(x, arrayHR)
+                date = time.localtime()
+                date2 = str(date.tm_mday)+"-"+str(date.tm_mon)+"-"+str(date.tm_year)
+                nomFichier = nom+"_"+date2+"_Heart.png"
+                pl.savefig(nomFichier)
+            except:
+                return None;
 
             return nomFichier
 
     def DisplayGraphHeart(self, userName):
 
         dataHeart = authentification.mainAuthentification(1)
-
+        
         arrayTimes = self.GetArrayTimes(dataHeart)
         arrayHR = self.GetArrayHR(dataHeart)
-        nameGraph = self.SaveGraph(arrayTimes, arrayHR, userName)
-     
+        nameGraph = self.SaveGraph(arrayTimes, arrayHR, userName)            
+                        
         return nameGraph
 
 

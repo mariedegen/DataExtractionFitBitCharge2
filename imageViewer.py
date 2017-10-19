@@ -36,8 +36,16 @@ class ImageViewer(QtWidgets.QMainWindow, interfaceMain.Ui_FitbitWindow):
         #to create and to save the graph
         functionGraph = graphicData.CatalogFunction()
         graph = functionGraph.DisplayGraphHeart(self.userName)
-        print("coucou")
-        self.windowGraph(graph)
+
+        if(graph != None):
+            self.windowGraph(graph)
+        else:
+            infoBox = QMessageBox()
+            infoBox.setIcon(QMessageBox.Information)
+            infoBox.setText("No data today or data not synchronized")
+            infoBox.setWindowTitle("Data missing")
+            infoBox.setEscapeButton(QMessageBox.Close)
+            infoBox.exec_()
 
         """graphMonth = functionGraph.DisplayGraphHeartMonth(self.userName)
         windowGraph(graphMonth)"""
@@ -79,24 +87,20 @@ class ImageViewer(QtWidgets.QMainWindow, interfaceMain.Ui_FitbitWindow):
         ui.setupUi(Heart_Rate, nameGraph)
         Heart_Rate.exec_()
 
-
     """def showdialog(self):
 
         Choice_Heart = QtWidgets.QDialog()
         uiHeart = Ui_ChoiceHeart()
         uiHeart.setupUi(Choice_Heart)
-        Choice_Heart.exec_()""" #a continuer
-
-        
-
-            
+        Choice_Heart.exec_()""" #a continuer        
 
     def main(self, nameUser):
-        self.show()
         self.userName = nameUser
+        self.show()
 
-def mainInterface(nameUser): 
-    app = QtWidgets.QApplication(sys.argv)
-    imageViewer = ImageViewer()
-    imageViewer.main(nameUser)
-    app.exec_()
+
+def mainInterface(nameUser):
+        appFitbit = QtWidgets.QApplication([])
+        imageViewer = ImageViewer()
+        imageViewer.main(nameUser)
+        sys.exit(appFitbit.exec_())

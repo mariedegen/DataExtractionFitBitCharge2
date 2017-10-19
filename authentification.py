@@ -18,7 +18,6 @@ import getTokens
 
 #This is the Fitbit URL to use for the API call
 FitbitURLProfile = "https://api.fitbit.com/1/user/-/profile.json"
-#FitbitURLStep = "https://api.fitbit.com/1/user/-/activities/log/steps/date/today/1d.json"
 #FitbitURLHeart = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/00:00/00:01.json"
 FitbitURLHeart = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1min.json"
 FitbitURLStep = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1m.json"
@@ -191,7 +190,12 @@ def mainAuthentification(menu):
   else:
     if (APIResponse == TokenRefreshedOK):
       print("Refreshed the access token.  Can go again")
-      mainAuthentification(0)
+      AccessToken, RefreshToken = GetConfig()
+      APICallOK, APIResponse = MakeAPICall(FitbitURLProfile, AccessToken, RefreshToken)
+      if APICallOK:
+        return APIResponse
+      else:
+        print(ErrorInAPI)
     else:
      print(ErrorInAPI)
 
