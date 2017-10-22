@@ -18,6 +18,7 @@ class ImageViewerSamsung(QtWidgets.QMainWindow, interfaceSamsung.Ui_SamsungWindo
         :param QtWidgets.QMainWindow: the type of the main window
         :param interfaceSamsung.Ui_SamsungWindow: to leak with the view 
     """
+
     
     def __init__(self, parent=None):
         """
@@ -27,6 +28,10 @@ class ImageViewerSamsung(QtWidgets.QMainWindow, interfaceSamsung.Ui_SamsungWindo
         """
         super(ImageViewerSamsung, self).__init__(parent)
         self.setupUi(self)
+
+        self.data = []
+
+        self.functionGraph = graphicData.CatalogFunction()
 
         #attribut the name of the user
         self.userName = ''
@@ -42,8 +47,10 @@ class ImageViewerSamsung(QtWidgets.QMainWindow, interfaceSamsung.Ui_SamsungWindo
         """
             To diplay the graph of the heart rate in an other window
         """
-        print("working on...")
+        graph = self.functionGraph.GetGraphHeartSamsung(self.data)
 
+        self.windowGraph(graph)
+        
 
     def handleButtonData(self):
         """
@@ -61,18 +68,19 @@ class ImageViewerSamsung(QtWidgets.QMainWindow, interfaceSamsung.Ui_SamsungWindo
         ui.setupUi(Heart_Rate, nameGraph)
         Heart_Rate.exec_()
 
-    def main(self):
+    def main(self, data):
         """
             To diplay the main window
         """
+        self.data = data
         self.show()
 
 
-def mainInterface():
+def mainInterface(data):
     """
        To run the samusung application
     """
     appSamsung = QtWidgets.QApplication([])
     imageViewerSamsung = ImageViewerSamsung()
-    imageViewerSamsung.main()
+    imageViewerSamsung.main(data)
     sys.exit(appSamsung.exec_())

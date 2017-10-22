@@ -31,7 +31,7 @@ class ImageViewer(QtWidgets.QMainWindow, interfaceFitbit.Ui_FitbitWindow):
 
         #attribut the name of the user
         self.userName = ''
-
+        
         self.functionGraph = graphicData.CatalogFunction()
         
         #handle the click
