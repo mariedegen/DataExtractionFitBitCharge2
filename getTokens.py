@@ -1,5 +1,4 @@
-
-"""
+"""@package fitbit
 Using the Authorization Code Grant
 
 The inital code was producted by pdwhmeautomation in Python 2
@@ -11,8 +10,11 @@ import urllib.request
 import urllib.error
 import json
 
-
 def getFirstToken(tokenFileName):
+  """
+    To obtain an access token and a refresh token.
+    :param tokenFileName: The path of the file where the token will be copy
+  """
 
   #These are the secrets etc from Fitbit developer
   OAuthTwoClientID = '228M93'
@@ -55,6 +57,7 @@ def getFirstToken(tokenFileName):
 
     print("Output >>> " + FullResponse.decode('utf-8'))
 
+    #recover access token and refresh token and write on tokenFileName 
     accessToken = ResponseJSON['access_token']
     refreshToken = ResponseJSON['refresh_token']
 

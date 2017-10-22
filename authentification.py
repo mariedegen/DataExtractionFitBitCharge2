@@ -21,6 +21,13 @@ FitbitURLProfile = "https://api.fitbit.com/1/user/-/profile.json"
 #FitbitURLHeart = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1sec/time/00:00/00:01.json"
 FitbitURLHeart = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1min.json"
 FitbitURLStep = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1m.json"
+FitbitURLFloor = "https://api.fitbit.com/1/user/-/activities/floors/date/today/1m.json"
+FitbitURLCalories = "https://api.fitbit.com/1/user/-/activities/calories/date/today/1m.json"
+FitbitURLDistance = "https://api.fitbit.com/1/user/-/activities/distance/date/today/1m.json"
+FitbitURLMinutes = "https://api.fitbit.com/1/user/-/activities/minutesSedentary/date/today/1m.json"
+FitbitURLActive = "https://api.fitbit.com/1/user/-/activities/minutesVeryActive/date/today/1m.json"
+
+
 
 # apiCall = '/1/user/-/devices.json'
 # apiCall = '/1/user/-/activities/date/2015-10-22.json'
@@ -181,7 +188,15 @@ def mainAuthentification(menu):
   elif (menu == 2):
     APICallOK, APIResponse = MakeAPICall(FitbitURLStep, AccessToken, RefreshToken)
   elif (menu == 3):
-    APICallOK, APIResponse = MakeAPICall(FitbitURLStep, AccessToken, RefreshToken)
+    APICallOK, APIResponse = MakeAPICall(FitbitURLFloor, AccessToken, RefreshToken)
+  elif (menu == 4):
+    APICallOK, APIResponse = MakeAPICall(FitbitURLCalories, AccessToken, RefreshToken)
+  elif (menu == 5):
+    APICallOK, APIResponse = MakeAPICall(FitbitURLDistance, AccessToken, RefreshToken)
+  elif (menu == 6):
+    APICallOK, APIResponse = MakeAPICall(FitbitURLMinutes, AccessToken, RefreshToken)
+  elif (menu == 7):
+    APICallOK, APIResponse = MakeAPICall(FitbitURLActive, AccessToken, RefreshToken)
   else :
     APICallOK, APIResponse = MakeAPICall(FitbitURLProfile, AccessToken, RefreshToken)
 

@@ -9,7 +9,8 @@ from PyQt5 import QtGui, QtCore, QtWidgets
 import sys
 
 import menuInterface
-import application
+import applicationFitbit
+import applicationSamsung
  
 class Menu(QtWidgets.QDialog, menuInterface.Ui_Menu):
     
@@ -26,10 +27,10 @@ class Menu(QtWidgets.QDialog, menuInterface.Ui_Menu):
 
     #To diplay the graph oh the heart rate in an other window
     def handleButtonFitbit(self):
-        application.mainApp()           
+        applicationFitbit.mainApp()           
 
     def handleButtonSamsung(self):
-        print("Working on...")    
+        applicationSamsung.mainAppSamsung()  
 
     def main(self):
         self.show()
