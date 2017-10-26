@@ -34,16 +34,16 @@ while True:
       port = first_match["port"]
       name = first_match["name"]
       host = first_match["host"]
-      print ("Connecting to \"%s\" on %s") % (name, host)
+      print ("Connecting to ", name, " on ", host)
       sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
       sock.connect((host, port))
       
       while True: 
-          data = sock.recv(1024)
+          data = sock.recv(8)
           if data:
-            print("Received [%s]" %data)
-            tabData.append(data)
+            tabData.append(data.decode('ascii'))
           elif not data :
             break
+          print("".join(tabData))
 sock.close()
 
