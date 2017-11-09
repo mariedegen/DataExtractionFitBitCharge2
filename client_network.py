@@ -9,12 +9,14 @@ import sys
 tabData = []
 address="BC:76:5E:96:EE:6C"
 uuid="00001101-0000-1000-8000-00805F9B34FB" 
-#service_matches = bluetooth.find_service(uuid = uuid, address = address)
+finish = True;
+end = 'END'
 
-while True:
+while finish:
     print ("Searching ...")
     try:
-            service_matches
+
+      service_matches
     except NameError:
       service_matches = bluetooth.find_service(uuid = uuid)
     else:
@@ -37,13 +39,16 @@ while True:
       print ("Connecting to ", name, " on ", host)
       sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
       sock.connect((host, port))
-      
+
+      data = sock.recv(8);
       while True: 
           data = sock.recv(8)
           if data:
-            tabData.append(data.decode('ascii'))
+            tabData.append(data.decode('latin1'))
+          if tabData.endswith(end):
+            break
           elif not data :
             break
-          print("".join(tabData))
+    print("".join(tabData))
 sock.close()
 
