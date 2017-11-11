@@ -18,8 +18,6 @@ class Menu(QtWidgets.QDialog, menuInterface.Ui_Menu):
         super(Menu, self).__init__(parent)
         self.setupUi(self)
 
-        self._want_to_close = False
-
         #handle the click
         self.pushButton.clicked.connect(self.handleButtonFitbit)
         self.pushButton_2.clicked.connect(self.handleButtonSamsung)
@@ -27,9 +25,11 @@ class Menu(QtWidgets.QDialog, menuInterface.Ui_Menu):
 
     #To diplay the graph oh the heart rate in an other window
     def handleButtonFitbit(self):
-        applicationFitbit.mainApp()           
-
+        self.hide()
+        applicationFitbit.mainApp()
+        
     def handleButtonSamsung(self):
+        self.hide()
         applicationSamsung.mainAppSamsung()  
 
     def main(self):

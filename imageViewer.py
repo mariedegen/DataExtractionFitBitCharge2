@@ -43,7 +43,7 @@ class ImageViewer(QtWidgets.QMainWindow, interfaceFitbit.Ui_FitbitWindow):
         self.btnEscalier.clicked.connect(self.handleButtonFloor)
         self.btnEclair.clicked.connect(self.handleButtonLightning)
         self.btnData.clicked.connect(self.handleButtonData)
-
+        self.menuHome.triggered[QAction].connect(self.closeIt)
 
     def handleButtonHeart(self):
         """
@@ -139,6 +139,9 @@ class ImageViewer(QtWidgets.QMainWindow, interfaceFitbit.Ui_FitbitWindow):
         uiHeart.setupUi(Choice_Heart)
         Choice_Heart.exec_()""" #a continuer        
 
+
+    def closeIt(self, q):
+        self.close()
 
     def main(self, nameUser):
         """

@@ -8,8 +8,12 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import sys
 
+import threading
+from multiprocessing import Queue
+
 import interfaceSamsung
 import graphicData
+import client_network
 from interfaceGraphic import *
  
 class ImageViewerSamsung(QtWidgets.QMainWindow, interfaceSamsung.Ui_SamsungWindow):
@@ -29,6 +33,7 @@ class ImageViewerSamsung(QtWidgets.QMainWindow, interfaceSamsung.Ui_SamsungWindo
         super(ImageViewerSamsung, self).__init__(parent)
         self.setupUi(self)
 
+        #attribut the data array
         self.data = []
 
         self.functionGraph = graphicData.CatalogFunction()
@@ -47,17 +52,29 @@ class ImageViewerSamsung(QtWidgets.QMainWindow, interfaceSamsung.Ui_SamsungWindo
         """
             To diplay the graph of the heart rate in an other window
         """
-        graph = self.functionGraph.GetGraphHeartSamsung(self.data)
-
-        self.windowGraph(graph)
+        if (self.data == []):
+            infoBox = QMessageBox()
+            infoBox.setIcon(QMessageBox.Information)
+            infoBox.setText("No data or data not synchronized yet")
+            infoBox.setWindowTitle("Data missing")
+            infoBox.setEscapeButton(QMessageBox.Close)
+            infoBox.exec_()
+        else:
+            graph = self.functionGraph.GetGraphHeartSamsung(self.data)
+            self.windowGraph(graph)
         
 
     def handleButtonData(self):
         """
             To collect and export data
         """
-        print("working on...")
+         #To create and to write a file
+        self.functionGraph.WriteFileSamsung(self.data)
 
+        #to display a message
+        QMessageBox.about(self, "Data export", "Data exported !")
+
+        
     def windowGraph(self, nameGraph):
         """
             To diplay the image of the graphe nameGraph
@@ -68,19 +85,30 @@ class ImageViewerSamsung(QtWidgets.QMainWindow, interfaceSamsung.Ui_SamsungWindo
         ui.setupUi(Heart_Rate, nameGraph)
         Heart_Rate.exec_()
 
-    def main(self, data):
+    def main(self):
         """
             To diplay the main window
         """
-        self.data = data
+        
+
         self.show()
 
+        #print(client_network.clientNetwork())
 
-def mainInterface(data):
+        """data = my_queue.get()
+        print(data)"""
+        
+
+def mainInterface():
     """
        To run the samusung application
     """
     appSamsung = QtWidgets.QApplication([])
     imageViewerSamsung = ImageViewerSamsung()
-    imageViewerSamsung.main(data)
+
+    my_queue = Queue()
+    thread1 = threading.Thread(target = client_network.clientNetwork, args = (imageViewerSamsung,))
+    thread1.start()
+            
+    imageViewerSamsung.main()
     sys.exit(appSamsung.exec_())

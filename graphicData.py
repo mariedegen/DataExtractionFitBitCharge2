@@ -33,6 +33,20 @@ class CatalogFunction():
             json.dump(data, f, indent=4)
 
 
+    def WriteFileSamsung(self, data):
+        """
+            Write in a file data of the day
+            :param self: the object
+            :param userName: the name of the user
+        """
+        date = time.localtime()
+        date2 = str(date.tm_mday)+"-"+str(date.tm_mon)+"-"+str(date.tm_year)
+        nomFichier = "Heart"+"_"+date2+".json"
+
+        with open(nomFichier, 'w') as f:
+            json.dump(data, f, indent=4)
+
+
     def GetArrayTimes(self, json):
         """
             Collect the data from json and get only times data

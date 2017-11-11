@@ -81,7 +81,7 @@ class Ui_FitbitWindow(object):
 
     def retranslateUi(self, FitbitWindow):
         _translate = QtCore.QCoreApplication.translate
-        FitbitWindow.setWindowTitle(_translate("FitbitWindow", "MainWindow"))
+        FitbitWindow.setWindowTitle(_translate("FitbitWindow", "FitbitWindow"))
         self.btnData.setText(_translate("FitbitWindow", "DATA EXPORT"))
         self.menuHome.setTitle(_translate("FitbitWindow", "Home"))
         self.actionExport.setText(_translate("FitbitWindow", "Export "))
