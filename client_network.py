@@ -10,6 +10,7 @@ import time
 
 def clientNetwork(imageViewerSamsung):
 
+    dataStr = ""
     tabData = []
     address="BC:76:5E:96:EE:6C"
     uuid="00001101-0000-1000-8000-00805F9B34FB" 
@@ -42,19 +43,35 @@ def clientNetwork(imageViewerSamsung):
           host = first_match["host"]
           print ("Connecting to ", name, " on ", host)
           sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-          sock.connect((host, port))
-
-          data = sock.recv(8);
-          while True: 
-              data = sock.recv(8)
-              if data:
-                tabData.append(data.decode('latin1'))
-              if tabData.endswith(end):
-                break
-              elif not data :
-                break
-        print("".join(tabData))
+          try:
+            sock.connect((host, port))
+          
+            data = sock.recv(9);
+            while True: 
+                data = sock.recv(8)
+                if data:
+                  dataStr += data.decode('latin1')
+                if dataStr.endswith(end):
+                  break
+                elif not data :
+                  break
+            finish = False
+          except OSError as e: 
+              print("error:", e)
+    print("data:", dataStr)
+    tabData = conversionChartoFloat(dataStr)
     sock.close()
+    del service_matches
+    dataStr = ""
 
     imageViewerSamsung.data = tabData
 
+def conversionChartoFloat(data): 
+    tabData = []
+    for str in data.replace(",", ".").split(" "):
+        try:
+            tabData.append(float(str))
+        except Exception:
+            pass
+    print("TabData : ", tabData)
+    return tabData
