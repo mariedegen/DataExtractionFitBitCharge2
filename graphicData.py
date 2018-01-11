@@ -87,7 +87,7 @@ class CatalogFunction():
             Build a graph of heart rate and save it on a picture 
             :param self: the object
             :param arrayTimes: an array of times
-            :param arrayHR: an array of heart rate
+            :param arrayHR: an ar ray of heart rate
             :param name: the name of the user
             :return nameFile: the name of the file
 
@@ -296,51 +296,4 @@ class CatalogFunction():
 
         return nameGraph
     
-    def GetGraphHeartSamsung(self, data):
-        """
-            To get the graph of the minutes
-            :param self: the object
-            :param userName: the name of the user
-            :return nameGraph: the name of the graph
-        """
-
-        dataHeart = self.extractData(data)
-
-        nameGraph = self.SaveGraphSamsung(dataHeart)
-
-        return nameGraph
-
-
-
-    def extractData(self, data):
-        
-        t = []
-        for n in range (0, len(data),1):
-            if (n != 0 and n <= len(data)-2):
-                t.append(float(data[n]))
-        return t
-    
-    
-    def SaveGraphSamsung(self, dataHeart):
-
-        debut = 0
-        fin = len(dataHeart)
-        pas = int((fin-debut)/5)
-        axeX = []
-        palier = debut
-        for i in range(0,len(dataHeart)):
-            if(i>=palier):
-                axeX.append(i)
-                palier = i + pas
-            else:
-                axeX.append('')
-        x=np.arange(len(axeX))
-        pl.figure(figsize=(10,4))
-        pl.xticks(pl.arange(len(axeX)), axeX)
-        pl.plot(x, dataHeart)
-        date = time.localtime()
-        date2 = str(date.tm_mday)+"-"+str(date.tm_mon)+"-"+str(date.tm_year)
-        nomFichier = date2+"_Heart"+".png"
-        pl.savefig(nomFichier)
-
-        return nomFichier
+   
